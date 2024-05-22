@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TikTok Ban Countdown</title>
+<link rel="stylesheet" href="styles.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5GJELFZYSK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-5GJELFZYSK');
+</script>
+</head>
+<body>
+
+<button class="night-mode-button" id="nightModeToggle">Night Mode</button>
+
+<div class="welcome-message" id="welcomeMessage">
+  TikTok will be banned...
+</div>
+
+<div class="countdown-container">
+  <div class="countdown-box" id="countdownBox1">
+    <div class="timer-row" id="timerRow1">
+      <div class="countdown-label">In:</div>
+      <div class="countdown" id="countdown1">00d 00h 00m 00s</div>
+    </div>
+  </div>
+
+  <div class="countdown-box" id="countdownBox2">
+    <div class="timer-row" id="timerRow2">
+      <div class="countdown-label">Or:</div>
+      <div class="countdown" id="countdown2">00d 00h 00m 00s</div>
+    </div>
+    <div class="extension-label" id="extensionLabel">With the 90 day extension</div>
+  </div>
+</div>
+
+<div class="social-buttons">
+  <button class="social-button" onclick="sharePage()">
+    <img src="https://img.icons8.com/material-rounded/24/FFFFFF/share.png" alt="Share"/> Share
+  </button>
+  <button class="social-button" onclick="shareOnFacebook()">
+    <img src="https://img.icons8.com/material-rounded/24/FFFFFF/facebook-new.png" alt="Facebook"/> Facebook
+  </button>
+  <button class="social-button" onclick="shareOnTwitterX()">
+    <img src="twitter-x-logo.svg" alt="X Logo"/> <span>(Twitter)</span>
+  </button>
+  <button class="social-button" onclick="shareOnLinkedIn()">
+    <img src="https://img.icons8.com/material-rounded/24/FFFFFF/linkedin.png" alt="LinkedIn"/> LinkedIn
+  </button>
+</div>
+
+<h2>Learn More</h2>
+<div class="learn-more-buttons">
+  <button class="learn-more-button" onclick="toggleContent('npcContent', this)">Are you a TikTok NPC?</button>
+  <button class="learn-more-button" onclick="toggleContent('tiktokBadContent', this)">Why is TikTok bad?</button>
+  <button class="learn-more-button" onclick="toggleContent('aboutTikTokBan', this)">About the TikTok Ban</button>
+  <button class="learn-more-button" onclick="toggleContent('embedCode', this)">Get Embed Code</button>
+</div>
+
+<div id="npcContent" class="content">
+  <p>These TikTok NPCs can try to sue the government, but they'll still be working at the local McDonald's when this countdown is over.</p>
+</div>
+
+<div id="tiktokBadContent" class="content">
+  <p>Quote: "Lawmakers and regulators in the West have increasingly expressed concern that TikTok and its parent company, ByteDance, may put sensitive user data, like location information, into the hands of the Chinese government." It's also full of misinformation, disinformation, and other bad influences.</p>
+</div>
+
+<div id="aboutTikTokBan" class="content">
+  <p>The bill that Biden signed gives TikTok’s Chinese parent, ByteDance, 270 days to sell TikTok. Failure to do so would lead to significant consequences: TikTok would be prohibited from US app stores and from “internet hosting services” that support it.</p>
+  <p>That would effectively restrict new downloads of the app and interaction with its content. Biden’s decision to sign the bill on Wednesday puts the deadline for a sale at January 19, 2025. Under the legislation, however, Biden could extend the deadline another 90 days if he determines the company’s made progress toward a sale, giving TikTok potentially up to a year before facing a ban.</p>
+</div>
+
+<div id="embedCode" class="content">
+  <button class="copy-button" onclick="copyToClipboard()">Copy</button>
+  <pre><code>&lt;!-- TikTok Ban Countdown Embed Code --&gt;
+&lt;div id="countdown-box"&gt;
+  &lt;div class="timer-row"&gt;
+    &lt;div class="countdown-label"&gt;In:&lt;/div&gt;
+    &lt;div class="countdown" id="countdown-embed"&gt;00d 00h 00m 00s&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  var endDateEmbed = moment.tz("2025-01-19 23:59:59", "America/New_York").valueOf();
+  
+  function updateCountdownEmbed() {
+    var now = moment().tz("America/New_York").valueOf();
+    var distance = endDateEmbed - now;
+    if (distance < 0) {
+      document.getElementById("countdown-box").innerHTML = "• The countdown has ended — the deadline has passed •";
+    } else {
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      document.getElementById("countdown-embed").innerHTML = (days < 10 ? "0" : "") + days + "d " + (hours < 10 ? "0" : "") + hours + "h " + (minutes < 10 ? "0" : "") + minutes + "m " + (seconds < 10 ? "0" : "") + seconds + "s ";
+    }
+  }
+  
+  setInterval(updateCountdownEmbed, 1000);
+&lt;/script&gt;
+</code></pre>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
