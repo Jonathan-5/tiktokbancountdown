@@ -122,14 +122,64 @@ function toggleContent(contentId, button) {
   } else {
     content.style.display = 'block';
     button.classList.add('active');
+    if (contentId === 'embedCode') {
+      document.getElementById('updateSelectionButton').style.display = 'inline-block';
+    }
   }
 }
 
 function copyToClipboard() {
-  const code = document.querySelector('#embedCode pre code').textContent;
+  const code = document.querySelector('#embedCodeContent').textContent;
   navigator.clipboard.writeText(code).then(() => {
     alert('Code copied to clipboard!');
   }).catch(err => {
     alert('Failed to copy code: ' + err);
   });
+}
+
+function showCustomizationOptions() {
+  document.getElementById('customizationOptions').style.display = 'block';
+}
+
+function generateCustomEmbedCode() {
+  const showDays = document.getElementById('showDays').checked;
+  const showHours = document.getElementById('showHours').checked;
+  const showMinutes = document.getElementById('showMinutes').checked;
+  const showSeconds = document.getElementById('showSeconds').checked;
+  const darkTheme = document.getElementById('darkTheme').checked;
+  const endMessage = document.getElementById('endMessage').value || '• The countdown has ended — the deadline has passed •';
+  const fontSize = document.getElementById('fontSize').value || '36';
+
+  const customCode = `&lt;!-- TikTok Ban Countdown Embed Code --&gt;
+&lt;div id="countdown-box" style="font-size: ${fontSize}px; ${darkTheme ? 'background-color: #2C2C2C; color: #FFFFFF;' : ''}"&gt;
+  &lt;div class="timer-row"&gt;
+    &lt;div class="countdown-label"&gt;In:&lt;/div&gt;
+    &lt;div class="countdown" id="countdown-embed"&gt;00d 00h 00m 00s&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  var endDateEmbed = moment.tz("2025-01-19 23:59:59", "America/New_York").valueOf();
+  
+  function updateCountdownEmbed() {
+    var now = moment().tz("America/New_York").valueOf();
+    var distance = endDateEmbed - now;
+    if (distance < 0) {
+      document.getElementById("countdown-box").innerHTML = "${endMessage}";
+    } else {
+      var days = ${showDays ? "Math.floor(distance / (1000 * 60 * 60 * 24)) + 'd '" : ""};
+      var hours = ${showHours ? "Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + 'h '" : ""};
+      var minutes = ${showMinutes ? "Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)) + 'm '" : ""};
+      var seconds = ${showSeconds ? "Math.floor((distance % (1000 * 60)) / 1000) + 's '" : ""};
+      document.getElementById("countdown-embed").innerHTML = (days < 10 ? "0" : "") + days + (hours < 10 ? "0" : "") + hours + (minutes < 10 ? "0" : "") + minutes + (seconds < 10 ? "0" : "") + seconds;
+    }
+  }
+  
+  setInterval(updateCountdownEmbed, 1000);
+&lt;/script&gt;`;
+
+  document.getElementById('embedCodeContent').innerHTML = customCode;
+  document.getElementById('customizationOptions').style.display = 'none';
+  document.getElementById('updateSelectionButton').style.display = 'none';
 }
