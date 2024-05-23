@@ -5,7 +5,7 @@ body {
   text-align: center;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 body.night-mode {
@@ -109,7 +109,7 @@ body.night-mode .extension-label {
   justify-content: center;
   gap: 10px;
   flex: 1 1 auto;
-  max-width: 300px;
+  max-width: calc(50% - 20px);
   transition: box-shadow 0.3s;
 }
 
@@ -162,8 +162,8 @@ body.night-mode .night-mode-button {
   color: #000;
   position: relative;
   overflow-x: auto;
-  max-width: 100%;
-  box-sizing: border-box;
+  max-width: 100%; /* Ensure content doesn't exceed viewport width */
+  box-sizing: border-box; /* Include padding in the element's width */
 }
 
 @media (min-width: 768px) {
@@ -218,4 +218,8 @@ body.night-mode .expired-message {
 
 .copy-button:hover {
   background-color: #3e8e41;
+}
+
+#customizationOptions {
+  display: none;
 }
