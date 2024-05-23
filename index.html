@@ -55,14 +55,9 @@
 
 <h2>Learn More</h2>
 <div class="learn-more-buttons">
-  <button class="learn-more-button" onclick="toggleContent('npcContent', this)">Are you a TikTok NPC?</button>
   <button class="learn-more-button" onclick="toggleContent('tiktokBadContent', this)">Why is TikTok bad?</button>
   <button class="learn-more-button" onclick="toggleContent('aboutTikTokBan', this)">About the TikTok Ban</button>
   <button class="learn-more-button" onclick="toggleContent('embedCode', this)">Get Embed Code</button>
-</div>
-
-<div id="npcContent" class="content">
-  <p>These TikTok NPCs can try to sue the government, but they'll still be working at the local McDonald's when this countdown is over.</p>
 </div>
 
 <div id="tiktokBadContent" class="content">
@@ -76,7 +71,7 @@
 
 <div id="embedCode" class="content">
   <button class="copy-button" onclick="copyToClipboard()">Copy</button>
-  <pre><code>&lt;!-- TikTok Ban Countdown Embed Code --&gt;
+  <pre><code id="embedCodeContent">&lt;!-- TikTok Ban Countdown Embed Code --&gt;
 &lt;div id="countdown-box"&gt;
   &lt;div class="timer-row"&gt;
     &lt;div class="countdown-label"&gt;In:&lt;/div&gt;
@@ -105,6 +100,33 @@
   setInterval(updateCountdownEmbed, 1000);
 &lt;/script&gt;
 </code></pre>
+  <button id="updateSelectionButton" onclick="showCustomizationOptions()">Update Selection</button>
+</div>
+
+<div id="customizationOptions" class="content">
+  <h3>Customize Embed Code</h3>
+  <label>
+    <input type="checkbox" id="showDays" checked> Show Days
+  </label>
+  <label>
+    <input type="checkbox" id="showHours" checked> Show Hours
+  </label>
+  <label>
+    <input type="checkbox" id="showMinutes" checked> Show Minutes
+  </label>
+  <label>
+    <input type="checkbox" id="showSeconds" checked> Show Seconds
+  </label>
+  <label>
+    <input type="checkbox" id="darkTheme"> Dark Theme
+  </label>
+  <label>
+    <input type="text" id="endMessage" placeholder="Countdown End Message"> 
+  </label>
+  <label>
+    <input type="number" id="fontSize" placeholder="Font Size (px)"> 
+  </label>
+  <button onclick="generateCustomEmbedCode()">Generate Custom Embed Code</button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
