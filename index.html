@@ -58,6 +58,7 @@
   <button class="learn-more-button" onclick="toggleContent('tiktokBadContent', this)">Why is TikTok bad?</button>
   <button class="learn-more-button" onclick="toggleContent('aboutTikTokBan', this)">About the TikTok Ban</button>
   <button class="learn-more-button" onclick="toggleContent('embedCode', this)">Get Embed Code</button>
+  <button class="learn-more-button" onclick="toggleContent('suggestionBox', this)">Submit a Suggestion</button>
 </div>
 
 <div id="tiktokBadContent" class="content">
@@ -127,6 +128,16 @@
     <input type="number" id="fontSize" placeholder="Font Size (px)"> 
   </label>
   <button onclick="generateCustomEmbedCode()">Generate Custom Embed Code</button>
+</div>
+
+<div id="suggestionBox" class="content">
+  <h3>Submit a Suggestion</h3>
+  <form id="suggestionForm">
+    <input type="text" id="name" name="name" placeholder="Your Name" required>
+    <textarea id="suggestion" name="suggestion" rows="5" placeholder="Your Suggestion" required></textarea>
+    <button type="submit">Submit</button>
+  </form>
+  <div id="message"></div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
