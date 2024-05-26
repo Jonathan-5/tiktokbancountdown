@@ -5,12 +5,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TikTok Ban Countdown</title>
 <link rel="stylesheet" href="styles.css">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5GJELFZYSK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag() { dataLayer.push(arguments); }
-  gtag('js', new Date());
-  gtag('config', 'G-5GJELFZYSK');
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCg2xH_zQ9HXrFmIsGwYJR225cuDNXDUXM",
+    authDomain: "suggestion-box-1e3ec.firebaseapp.com",
+    projectId: "suggestion-box-1e3ec",
+    storageBucket: "suggestion-box-1e3ec.appspot.com",
+    messagingSenderId: "231744535187",
+    appId: "1:231744535187:web:862d903a337ba33e4bab66"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const name = document.getElementById('name').value;
+    const suggestion = document.getElementById('suggestion').value;
+    
+    try {
+      await addDoc(collection(db, "suggestions"), {
+        name: name,
+        suggestion: suggestion,
+        timestamp: serverTimestamp()
+      });
+      document.getElementById('message').innerText = 'Thank you for your suggestion!';
+      document.getElementById('suggestionForm').reset();
+    } catch (error) {
+      document.getElementById('message').innerText = 'An error occurred. Please try again later.';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('suggestionForm').addEventListener('submit', handleSubmit);
+  });
 </script>
 </head>
 <body>
@@ -140,8 +171,6 @@
   <div id="message"></div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
 <script src="script.js"></script>
 
 </body>
