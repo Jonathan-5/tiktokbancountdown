@@ -1,265 +1,140 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #0D1B2A;
-  color: #FFFFFF;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-}
+document.getElementById('suggestionForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var name = document.getElementById('name').value;
+  var suggestion = document.getElementById('suggestion').value;
 
-body.night-mode {
-  background-color: #121212;
-  color: #B0B0B0;
-}
+  db.collection("suggestions").add({
+    name: name,
+    suggestion: suggestion,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  })
+  .then(() => {
+    document.getElementById('message').innerText = 'Thank you for your suggestion!';
+    document.getElementById('suggestionForm').reset();
+  })
+  .catch((error) => {
+    document.getElementById('message').innerText = 'An error occurred. Please try again later.';
+  });
+});
 
-.welcome-message {
-  font-size: 48px;
-  font-weight: bold;
-  margin: 50px 0 5px;
-  animation: colorAnimation 6s infinite linear;
-}
+function toggleContent(contentId, button) {
+  const contentElements = document.querySelectorAll('.content');
+  const buttons = document.querySelectorAll('.learn-more-button');
 
-body.night-mode .welcome-message {
-  animation: none;
-}
+  contentElements.forEach(content => {
+    if (content.id !== contentId) {
+      content.style.display = 'none';
+    }
+  });
 
-@keyframes colorAnimation {
-  0%, 100% {
-    color: #B22234;
+  buttons.forEach(btn => {
+    if (btn !== button) {
+      btn.classList.remove('active');
+    }
+  });
+
+  const content = document.getElementById(contentId);
+  if (content.style.display === 'block') {
+    content.style.display = 'none';
+    button.classList.remove('active');
+  } else {
+    content.style.display = 'block';
+    button.classList.add('active');
+    if (contentId === 'embedCode') {
+      document.getElementById('updateSelectionButton').style.display = 'inline-block';
+    }
   }
-  50% {
-    color: #FFFFFF;
-  }
 }
 
-.countdown-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-  gap: 20px;
+function copyToClipboard() {
+  const code = document.querySelector('#embedCodeContent').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    alert('Code copied to clipboard!');
+  }).catch(err => {
+    alert('Failed to copy code: ' + err);
+  });
 }
 
-.countdown-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #1F3C88;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  width: 90%;
-  text-align: center;
+function showCustomizationOptions() {
+  document.getElementById('customizationOptions').style.display = 'block';
 }
 
-body.night-mode .countdown-box {
-  background-color: #2C2C2C;
-}
+function generateCustomEmbedCode() {
+  const showDays = document.getElementById('showDays').checked;
+  const showHours = document.getElementById('showHours').checked;
+  const showMinutes = document.getElementById('showMinutes').checked;
+  const showSeconds = document.getElementById('showSeconds').checked;
+  const darkTheme = document.getElementById('darkTheme').checked;
+  const endMessage = document.getElementById('endMessage').value || '• The countdown has ended — the deadline has passed •';
+  const fontSize = document.getElementById('fontSize').value || '36';
 
-.timer-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.countdown {
-  font-size: 36px;
-  margin: 10px 0;
-  animation: countdownAnimation 1s infinite alternate;
-  font-weight: bold;
-}
-
-body.night-mode .countdown {
-  animation: none;
-}
-
-.countdown-label, 
-.extension-label {
-  font-size: 24px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  font-weight: bold;
-}
-
-body.night-mode .countdown-label, 
-body.night-mode .extension-label {
-  text-shadow: none;
-}
-
-.social-buttons,
-.learn-more-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin: 20px 0;
-}
-
-.social-button,
-.learn-more-button {
-  background-color: #1F3C88;
-  color: #FFFFFF;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  flex: 1 1 auto;
-  max-width: calc(50% - 20px);
-  transition: box-shadow 0.3s;
-}
-
-.learn-more-button {
-  width: auto;
-}
-
-.learn-more-button.active {
-  box-shadow: 0 0 10px 2px #FF0000;
-}
-
-body.night-mode .social-button,
-body.night-mode .learn-more-button {
-  background-color: #2C2C2C;
-  color: #B0B0B0;
-}
-
-.social-button img,
-.learn-more-button img {
-  height: 24px;
-  width: 24px;
-}
-
-.night-mode-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #1F3C88;
-  color: #FFFFFF;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-body.night-mode .night-mode-button {
-  background-color: #2C2C2C;
-  color: #B0B0B0;
-}
-
-.content {
-  display: none;
-  margin-top: 20px;
-  font-size: 18px;
-  line-height: 1.6;
-  padding: 20px;
-  border-radius: 10px;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  color: #000;
-  position: relative;
-  overflow-x: auto;
-  max-width: 100%; /* Ensure content doesn't exceed viewport width */
-  box-sizing: border-box; /* Include padding in the element's width */
-}
-
-@media (min-width: 768px) {
-  .countdown-container {
-    flex-direction: column;
-    justify-content: center;
+  const customCode = `&lt;!-- TikTok Ban Countdown Embed Code --&gt;
+&lt;div id="countdown-box" style="font-size: ${fontSize}px; ${darkTheme ? 'background-color: #2C2C2C; color: #FFFFFF;' : ''}"&gt;
+  &lt;div class="timer-row"&gt;
+    &lt;div class="countdown-label"&gt;In:&lt;/div&gt;
+    &lt;div class="countdown" id="countdown-embed"&gt;00d 00h 00m 00s&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  var endDateEmbed = moment.tz("2025-01-19 23:59:59", "America/New_York").valueOf();
+  
+  function updateCountdownEmbed() {
+    var now = moment().tz("America/New_York").valueOf();
+    var distance = endDateEmbed - now;
+    if (distance < 0) {
+      document.getElementById("countdown-box").innerHTML = "${endMessage}";
+    } else {
+      var days = ${showDays ? "Math.floor(distance / (1000 * 60 * 60 * 24)) + 'd '" : ""};
+      var hours = ${showHours ? "Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + 'h '" : ""};
+      var minutes = ${showMinutes ? "Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)) + 'm '" : ""};
+      var seconds = ${showSeconds ? "Math.floor((distance % (1000 * 60)) / 1000) + 's '" : ""};
+      document.getElementById("countdown-embed").innerHTML = (days < 10 ? "0" : "") + days + (hours < 10 ? "0" : "") + hours + (minutes < 10 ? "0" : "") + minutes + (seconds < 10 ? "0" : "") + seconds;
+    }
   }
   
-  .countdown-box {
-    width: 45%;
-    max-width: 500px;
+  setInterval(updateCountdownEmbed, 1000);
+&lt;/script&gt;`;
+
+  document.getElementById('embedCodeContent').innerHTML = customCode;
+  document.getElementById('customizationOptions').style.display = 'none';
+  document.getElementById('updateSelectionButton').style.display = 'none';
+}
+
+document.getElementById('nightModeToggle').addEventListener('click', function() {
+  document.body.classList.toggle('night-mode');
+});
+
+function sharePage() {
+  if (navigator.share) {
+    navigator.share({
+      title: 'TikTok Ban Countdown',
+      url: window.location.href
+    }).then(() => {
+      console.log('Thanks for sharing!');
+    }).catch((err) => {
+      console.log(`Couldn't share because of`, err.message);
+    });
+  } else {
+    alert('Your browser does not support the Web Share API');
   }
-  
-  .social-button {
-    max-width: initial;
-    flex: initial;
-  }
-
-  .content {
-    max-width: 80%;
-    margin: 0 auto;
-  }
 }
 
-.expired-message {
-  display: block;
-  font-size: 36px;
-  color: #FF0000;
-  animation: fadeIn 2s forwards;
+function shareOnFacebook() {
+  const url = encodeURIComponent(window.location.href);
+  const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+  window.open(shareUrl, '_blank');
 }
 
-body.night-mode .expired-message {
-  color: #FF6666;
+function shareOnTwitterX() {
+  const url = encodeURIComponent(window.location.href);
+  const shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=Check%20out%20this%20TikTok%20ban%20countdown!`;
+  window.open(shareUrl, '_blank');
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.copy-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #4CAF50;
-  color: #FFFFFF;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.copy-button:hover {
-  background-color: #3e8e41;
-}
-
-#customizationOptions {
-  display: none;
-}
-
-.quote {
-  font-style: italic;
-  font-size: 20px;
-  color: #FF6347; /* Tomato color */
-  text-align: center;
-  padding: 10px;
-  background-color: #1F3C88;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-}
-
-#suggestionBox .content {
-  background-color: #1F3C88;
-  color: #FFFFFF;
-}
-
-#suggestionBox input[type="text"],
-#suggestionBox textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #2C2C2C;
-  color: #FFFFFF;
-}
-
-#suggestionBox button {
-  background-color: #4CAF50;
-  color: #FFFFFF;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#suggestionBox button:hover {
-  background-color: #3e8e41;
+function shareOnLinkedIn() {
+  const url = encodeURIComponent(window.location.href);
+  const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+  window.open(shareUrl, '_blank');
 }
