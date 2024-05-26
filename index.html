@@ -43,6 +43,7 @@
     document.getElementById('suggestionForm').addEventListener('submit', handleSubmit);
   });
 </script>
+<script src="script.js" defer></script>
 </head>
 <body>
 
@@ -130,7 +131,6 @@
   }
   
   setInterval(updateCountdownEmbed, 1000);
-&lt;/script&gt;
 </code></pre>
   <button id="updateSelectionButton" onclick="showCustomizationOptions()">Update Selection</button>
 </div>
@@ -171,7 +171,275 @@
   <div id="message"></div>
 </div>
 
-<script src="script.js"></script>
-
 </body>
 </html>
+"""
+
+### styles.css
+
+```css
+body {
+  font-family: Arial, sans-serif;
+  background-color: #0D1B2A;
+  color: #FFFFFF;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+body.night-mode {
+  background-color: #121212;
+  color: #B0B0B0;
+}
+
+.welcome-message {
+  font-size: 48px;
+  font-weight: bold;
+  margin: 50px 0 5px;
+  animation: colorAnimation 6s infinite linear;
+}
+
+body.night-mode .welcome-message {
+  animation: none;
+}
+
+@keyframes colorAnimation {
+  0%, 100% {
+    color: #B22234;
+  }
+  50% {
+    color: #FFFFFF;
+  }
+}
+
+.countdown-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.countdown-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1F3C88;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  width: 90%;
+  text-align: center;
+}
+
+body.night-mode .countdown-box {
+  background-color: #2C2C2C;
+}
+
+.timer-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.countdown {
+  font-size: 36px;
+  margin: 10px 0;
+  animation: countdownAnimation 1s infinite alternate;
+  font-weight: bold;
+}
+
+body.night-mode .countdown {
+  animation: none;
+}
+
+.countdown-label, 
+.extension-label {
+  font-size: 24px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+}
+
+body.night-mode .countdown-label, 
+body.night-mode .extension-label {
+  text-shadow: none;
+}
+
+.social-buttons,
+.learn-more-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.social-button,
+.learn-more-button {
+  background-color: #1F3C88;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex: 1 1 auto;
+  max-width: calc(50% - 20px);
+  transition: box-shadow 0.3s;
+}
+
+.learn-more-button {
+  width: auto;
+}
+
+.learn-more-button.active {
+  box-shadow: 0 0 10px 2px #FF0000;
+}
+
+body.night-mode .social-button,
+body.night-mode .learn-more-button {
+  background-color: #2C2C2C;
+  color: #B0B0B0;
+}
+
+.social-button img,
+.learn-more-button img {
+  height: 24px;
+  width: 24px;
+}
+
+.night-mode-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #1F3C88;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+body.night-mode .night-mode-button {
+  background-color: #2C2C2C;
+  color: #B0B0B0;
+}
+
+.content {
+  display: none;
+  margin-top: 20px;
+  font-size: 18px;
+  line-height: 1.6;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #000;
+  position: relative;
+  overflow-x: auto;
+  max-width: 100%; /* Ensure content doesn't exceed viewport width */
+  box-sizing: border-box; /* Include padding in the element's width */
+}
+
+@media (min-width: 768px) {
+  .countdown-container {
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .countdown-box {
+    width: 45%;
+    max-width: 500px;
+  }
+  
+  .social-button {
+    max-width: initial;
+    flex: initial;
+  }
+
+  .content {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+}
+
+.expired-message {
+  display: block;
+  font-size: 36px;
+  color: #FF0000;
+  animation: fadeIn 2s forwards;
+}
+
+body.night-mode .expired-message {
+  color: #FF6666;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.copy-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #4CAF50;
+  color: #FFFFFF;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.copy-button:hover {
+  background-color: #3e8e41;
+}
+
+#customizationOptions {
+  display: none;
+}
+
+.quote {
+  font-style: italic;
+  font-size: 20px;
+  color: #FF6347; /* Tomato color */
+  text-align: center;
+  padding: 10px;
+  background-color: #1F3C88;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+#suggestionBox .content {
+  background-color: #1F3C88;
+  color: #FFFFFF;
+}
+
+#suggestionBox input[type="text"],
+#suggestionBox textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #2C2C2C;
+  color: #FFFFFF;
+}
+
+#suggestionBox button {
+  background-color: #4CAF50;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#suggestionBox button:hover {
+  background-color: #3e8e41;
+}
