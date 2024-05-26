@@ -172,4 +172,35 @@ function generateCustomEmbedCode() {
       var hours = ${showHours ? "Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + 'h '" : ""};
       var minutes = ${showMinutes ? "Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)) + 'm '" : ""};
       var seconds = ${showSeconds ? "Math.floor((distance % (1000 * 60)) / 1000) + 's '" : ""};
-      document.getElementById("countdown-embed").innerHTML = (days < 10 ? "0" : "") + days + (hours < 10 ? "0" : "") + hours + (minutes < 10 ? "0" : "") + minutes + (seconds
+      document.getElementById("countdown-embed").innerHTML = (days < 10 ? "0" : "") + days + (hours < 10 ? "0" : "") + hours + (minutes < 10 ? "0" : "") + minutes + (seconds < 10 ? "0" : "") + seconds;
+    }
+  }
+  
+  setInterval(updateCountdownEmbed, 1000);
+&lt;/script&gt;`;
+
+  document.getElementById('embedCodeContent').innerHTML = customCode;
+  document.getElementById('customizationOptions').style.display = 'none';
+  document.getElementById('updateSelectionButton').style.display = 'none';
+}
+
+// Handle suggestion form submission
+document.getElementById('suggestionForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var formData = new FormData(this);
+
+  fetch('submit_suggestion.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById('message').innerText = data.message;
+    if (data.success) {
+      document.getElementById('suggestionForm').reset();
+    }
+  })
+  .catch(error => {
+    document.getElementById('message').innerText = 'An error occurred. Please try again later.';
+  });
+});
