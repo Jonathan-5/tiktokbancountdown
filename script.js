@@ -1,21 +1,97 @@
-document.getElementById('suggestionForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  var name = document.getElementById('name').value;
-  var suggestion = document.getElementById('suggestion').value;
+// Countdown setup
+const endDate1 = new Date('2025-01-19T23:59:59Z').getTime();
+const endDate2 = new Date('2025-04-19T23:59:59Z').getTime();
 
-  db.collection("suggestions").add({
-    name: name,
-    suggestion: suggestion,
-    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-  })
-  .then(() => {
-    document.getElementById('message').innerText = 'Thank you for your suggestion!';
-    document.getElementById('suggestionForm').reset();
-  })
-  .catch((error) => {
-    document.getElementById('message').innerText = 'An error occurred. Please try again later.';
-  });
-});
+function updateCountdown1() {
+  const now = new Date().getTime();
+  const distance = endDate1 - now;
+  if (distance < 0) {
+    document.getElementById('countdownBox1').innerHTML = "• The first countdown has ended — the initial deadline has passed •";
+    document.getElementById('welcomeMessage').innerHTML = "TikTok ban in progress?";
+    document.getElementById('timerRow2').style.display = 'none';
+    document.getElementById('extensionLabel').innerHTML = "Extension timer is running";
+  } else {
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    document.getElementById('countdown1').innerHTML = (days < 10 ? "0" : "") + days + "d " + (hours < 10 ? "0" : "") + hours + "h " + (minutes < 10 ? "0" : "") + minutes + "m " + (seconds < 10 ? "0" : "") + seconds + "s ";
+  }
+}
+
+function updateCountdown2() {
+  const now = new Date().getTime();
+  const distance = endDate2 - now;
+  if (distance < 0) {
+    document.getElementById('countdownBox2').innerHTML = "• The extension deadline has also passed. TikTok may now be banned, depending on a sale •";
+    document.getElementById('welcomeMessage').innerHTML = "TikTok ban now in effect?";
+  } else {
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    document.getElementById('countdown2').innerHTML = (days < 10 ? "0" : "") + days + "d " + (hours < 10 ? "0" : "") + hours + "h " + (minutes < 10 ? "0" : "") + minutes + "m " + (seconds < 10 ? "0" : "") + seconds + "s ";
+  }
+}
+
+function initializeCountdowns() {
+  const now = new Date().getTime();
+
+  if (endDate1 - now < 0) {
+    document.getElementById('countdownBox1').innerHTML = "• The first countdown has ended — the initial deadline has passed •";
+    document.getElementById('welcomeMessage').innerHTML = "TikTok ban in progress?";
+    document.getElementById('timerRow2').style.display = 'none';
+    document.getElementById('extensionLabel').innerHTML = "Extension timer is running";
+  } else {
+    setInterval(updateCountdown1, 1000);
+  }
+
+  if (endDate2 - now < 0) {
+    document.getElementById('countdownBox2').innerHTML = "• The extension deadline has also passed. TikTok may now be banned, depending on a sale •";
+    document.getElementById('welcomeMessage').innerHTML = "TikTok ban now in effect?";
+  } else {
+    setInterval(updateCountdown2, 1000);
+  }
+}
+
+initializeCountdowns();
+
+function toggleNightMode() {
+  document.body.classList.toggle('night-mode');
+}
+
+function sharePage() {
+  if (navigator.share) {
+    navigator.share({
+      title: 'TikTok Ban Countdown',
+      url: window.location.href
+    }).then(() => {
+      console.log('Thanks for sharing!');
+    }).catch((err) => {
+      console.log(`Couldn't share because of`, err.message);
+    });
+  } else {
+    alert('Your browser does not support the Web Share API');
+  }
+}
+
+function shareOnFacebook() {
+  const url = encodeURIComponent(window.location.href);
+  const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+  window.open(shareUrl, '_blank');
+}
+
+function shareOnTwitterX() {
+  const url = encodeURIComponent(window.location.href);
+  const shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=Check%20out%20this%20TikTok%20ban%20countdown!`;
+  window.open(shareUrl, '_blank');
+}
+
+function shareOnLinkedIn() {
+  const url = encodeURIComponent(window.location.href);
+  const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+  window.open(shareUrl, '_blank');
+}
 
 function toggleContent(contentId, button) {
   const contentElements = document.querySelectorAll('.content');
@@ -105,36 +181,3 @@ function generateCustomEmbedCode() {
 document.getElementById('nightModeToggle').addEventListener('click', function() {
   document.body.classList.toggle('night-mode');
 });
-
-function sharePage() {
-  if (navigator.share) {
-    navigator.share({
-      title: 'TikTok Ban Countdown',
-      url: window.location.href
-    }).then(() => {
-      console.log('Thanks for sharing!');
-    }).catch((err) => {
-      console.log(`Couldn't share because of`, err.message);
-    });
-  } else {
-    alert('Your browser does not support the Web Share API');
-  }
-}
-
-function shareOnFacebook() {
-  const url = encodeURIComponent(window.location.href);
-  const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-  window.open(shareUrl, '_blank');
-}
-
-function shareOnTwitterX() {
-  const url = encodeURIComponent(window.location.href);
-  const shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=Check%20out%20this%20TikTok%20ban%20countdown!`;
-  window.open(shareUrl, '_blank');
-}
-
-function shareOnLinkedIn() {
-  const url = encodeURIComponent(window.location.href);
-  const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
-  window.open(shareUrl, '_blank');
-}
