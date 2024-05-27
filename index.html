@@ -5,60 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TikTok Ban Countdown</title>
 <link rel="stylesheet" href="styles.css">
-<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js"></script>
-<!-- Add Firebase products that you want to use -->
-<script src="https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js"></script>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
-  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "your-api-key",
-    authDomain: "your-auth-domain",
-    projectId: "your-project-id",
-    storageBucket: "your-storage-bucket",
-    messagingSenderId: "your-messaging-sender-id",
-    appId: "your-app-id"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const auth = getAuth();
-
-  // Sign in anonymously
-  signInAnonymously(auth)
-    .then(() => {
-      console.log('Signed in anonymously');
-    })
-    .catch((error) => {
-      console.error('Error signing in anonymously:', error);
-    });
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    const name = document.getElementById('name').value;
-    const suggestion = document.getElementById('suggestion').value;
-    
-    try {
-      await addDoc(collection(db, "suggestions"), {
-        name: name,
-        suggestion: suggestion,
-        timestamp: serverTimestamp()
-      });
-      document.getElementById('message').innerText = 'Thank you for your suggestion!';
-      document.getElementById('suggestionForm').reset();
-    } catch (error) {
-      document.getElementById('message').innerText = 'An error occurred. Please try again later.';
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('suggestionForm').addEventListener('submit', handleSubmit);
-  });
-</script>
 <script src="script.js" defer></script>
 </head>
 <body>
@@ -106,7 +52,6 @@
   <button class="learn-more-button" onclick="toggleContent('tiktokBadContent', this)">Why is TikTok bad?</button>
   <button class="learn-more-button" onclick="toggleContent('aboutTikTokBan', this)">About the TikTok Ban</button>
   <button class="learn-more-button" onclick="toggleContent('embedCode', this)">Get Embed Code</button>
-  <button class="learn-more-button" onclick="toggleContent('suggestionBox', this)">Submit a Suggestion</button>
 </div>
 
 <div id="tiktokBadContent" class="content">
@@ -147,6 +92,7 @@
   }
   
   setInterval(updateCountdownEmbed, 1000);
+&lt;/script&gt;
 </code></pre>
   <button id="updateSelectionButton" onclick="showCustomizationOptions()">Update Selection</button>
 </div>
@@ -175,16 +121,6 @@
     <input type="number" id="fontSize" placeholder="Font Size (px)"> 
   </label>
   <button onclick="generateCustomEmbedCode()">Generate Custom Embed Code</button>
-</div>
-
-<div id="suggestionBox" class="content">
-  <h3>Submit a Suggestion</h3>
-  <form id="suggestionForm">
-    <input type="text" id="name" name="name" placeholder="Your Name" required>
-    <textarea id="suggestion" name="suggestion" rows="5" placeholder="Your Suggestion" required></textarea>
-    <button type="submit">Submit</button>
-  </form>
-  <div id="message"></div>
 </div>
 
 </body>
