@@ -1,9 +1,9 @@
-// Countdown setup
-const endDate1 = new Date('2025-01-19T23:59:59Z').getTime();
-const endDate2 = new Date('2025-04-19T23:59:59Z').getTime();
+// Countdown setup using moment-timezone
+const endDate1 = moment.tz("2025-01-19 23:59:59", "America/New_York").valueOf();
+const endDate2 = moment.tz("2025-04-19 23:59:59", "America/New_York").valueOf();
 
 function updateCountdown1() {
-  const now = new Date().getTime();
+  const now = moment().tz("America/New_York").valueOf();
   const distance = endDate1 - now;
   if (distance < 0) {
     document.getElementById('countdownBox1').innerHTML = "• The first countdown has ended — the initial deadline has passed •";
@@ -20,7 +20,7 @@ function updateCountdown1() {
 }
 
 function updateCountdown2() {
-  const now = new Date().getTime();
+  const now = moment().tz("America/New_York").valueOf();
   const distance = endDate2 - now;
   if (distance < 0) {
     document.getElementById('countdownBox2').innerHTML = "• The extension deadline has also passed. TikTok may now be banned, depending on a sale •";
@@ -35,7 +35,7 @@ function updateCountdown2() {
 }
 
 function initializeCountdowns() {
-  const now = new Date().getTime();
+  const now = moment().tz("America/New_York").valueOf();
 
   if (endDate1 - now < 0) {
     document.getElementById('countdownBox1').innerHTML = "• The first countdown has ended — the initial deadline has passed •";
@@ -56,8 +56,8 @@ function initializeCountdowns() {
 
 initializeCountdowns();
 
-function toggleNightMode() {
-  document.body.classList.toggle('night-mode');
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
 }
 
 function sharePage() {
@@ -179,5 +179,5 @@ function generateCustomEmbedCode() {
 }
 
 document.getElementById('nightModeToggle').addEventListener('click', function() {
-  document.body.classList.toggle('night-mode');
+  document.body.classList.toggle('dark-mode');
 });
