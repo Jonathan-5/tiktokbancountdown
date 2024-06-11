@@ -8,7 +8,7 @@ body {
   overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
-body.night-mode {
+body.dark-mode {
   background-color: #121212;
   color: #B0B0B0;
 }
@@ -20,7 +20,7 @@ body.night-mode {
   animation: colorAnimation 6s infinite linear;
 }
 
-body.night-mode .welcome-message {
+body.dark-mode .welcome-message {
   animation: none;
 }
 
@@ -53,7 +53,7 @@ body.night-mode .welcome-message {
   text-align: center;
 }
 
-body.night-mode .countdown-box {
+body.dark-mode .countdown-box {
   background-color: #2C2C2C;
 }
 
@@ -70,7 +70,7 @@ body.night-mode .countdown-box {
   font-weight: bold;
 }
 
-body.night-mode .countdown {
+body.dark-mode .countdown {
   animation: none;
 }
 
@@ -81,8 +81,8 @@ body.night-mode .countdown {
   font-weight: bold;
 }
 
-body.night-mode .countdown-label, 
-body.night-mode .extension-label {
+body.dark-mode .countdown-label, 
+body.dark-mode .extension-label {
   text-shadow: none;
 }
 
@@ -121,8 +121,8 @@ body.night-mode .extension-label {
   box-shadow: 0 0 10px 2px #FF0000;
 }
 
-body.night-mode .social-button,
-body.night-mode .learn-more-button {
+body.dark-mode .social-button,
+body.dark-mode .learn-more-button {
   background-color: #2C2C2C;
   color: #B0B0B0;
 }
@@ -133,7 +133,7 @@ body.night-mode .learn-more-button {
   width: 24px;
 }
 
-.night-mode-button {
+.dark-mode-button {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -145,7 +145,7 @@ body.night-mode .learn-more-button {
   cursor: pointer;
 }
 
-body.night-mode .night-mode-button {
+body.dark-mode .dark-mode-button {
   background-color: #2C2C2C;
   color: #B0B0B0;
 }
@@ -195,7 +195,7 @@ body.night-mode .night-mode-button {
   animation: fadeIn 2s forwards;
 }
 
-body.night-mode .expired-message {
+body.dark-mode .expired-message {
   color: #FF6666;
 }
 
