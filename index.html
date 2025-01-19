@@ -8,15 +8,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
     <script src="script.js" defer></script>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5GJELFZYSK"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-5GJELFZYSK');
-    </script>
 </head>
 <body>
 
@@ -33,77 +24,37 @@
                 <div class="countdown" id="countdown1">00d 00h 00m 00s</div>
             </div>
         </div>
-    </div>
-
-    <div class="social-buttons">
-        <button class="social-button" onclick="sharePage()">
-            <img src="https://img.icons8.com/material-rounded/24/FFFFFF/share.png" alt="Share"/> Share
-        </button>
-        <button class="social-button" onclick="shareOnFacebook()">
-            <img src="https://img.icons8.com/material-rounded/24/FFFFFF/facebook-new.png" alt="Facebook"/> Facebook
-        </button>
-        <button class="social-button" onclick="shareOnTwitterX()">
-            <img src="twitter-x-logo.svg" alt="X Logo"/> <span>(Twitter)</span>
-        </button>
-        <button class="social-button" onclick="shareOnLinkedIn()">
-            <img src="https://img.icons8.com/material-rounded/24/FFFFFF/linkedin.png" alt="LinkedIn"/> LinkedIn
-        </button>
+        <div class="countdown-box" id="countdownBox2">
+            <div class="timer-row" id="timerRow2">
+                <div class="countdown-label">Or:</div>
+                <div class="countdown" id="countdown2">00d 00h 00m 00s</div>
+            </div>
+            <div class="extension-label" id="extensionLabel">With the 90 day extension</div>
+        </div>
     </div>
 
     <h2>Learn More</h2>
     <div class="learn-more-buttons">
-        <button class="learn-more-button" onclick="toggleContent('tiktokBadContent', this)">Why is TikTok bad?</button>
         <button class="learn-more-button" onclick="toggleContent('aboutTikTokBan', this)">About the TikTok Ban</button>
-        <button class="learn-more-button" onclick="toggleContent('embedCode', this)">Get Embed Code</button>
+        <button class="learn-more-button" onclick="toggleContent('aboutTikTokBanTimer', this)">About the TikTok Ban Timer</button>
     </div>
 
-    <div id="tiktokBadContent" class="content">
-        <p class="quote">Quote: "Lawmakers and regulators have increasingly expressed concern that TikTok and its parent company, ByteDance, may put sensitive user data, like location information, into the hands of the Chinese government."</p>
+    <div id="aboutTikTokBan" class="content">
+        <p>The bill Biden signed gave TikTok’s Chinese parent, ByteDance, 270 days to sell TikTok or face a ban. The original deadline for this was January 19, 2025, at midnight. If ByteDance didn’t sell TikTok, app stores and internet providers would have to block the app, making it unusable in the U.S.</p>
+
+        <p>However, two days before the deadline, Biden announced he wouldn’t enforce the ban and decided to leave the decision to President-elect Trump. On January 18, 2025, TikTok proactively shut down its services in the U.S. before the government enforced the ban.</p>
+
+        <p>President-elect Trump then announced plans to issue an executive order extending the deadline by 90 days. This means TikTok has until April 19, 2025, to complete a sale or face a ban. TikTok has since started restoring its services for U.S. users.</p>
+
+        <p>ByteDance now has a limited window to find a buyer, while content creators scramble to prepare for the platform’s uncertain future.</p>
     </div>
 
-<div id="aboutTikTokBan" class="content">
-    <p>The bill Biden signed gave TikTok’s Chinese parent, ByteDance, 270 days to sell TikTok or face a ban. The deadline for this was January 19, 2025. Originally, this meant app stores and internet providers wouldn’t support TikTok anymore, effectively making it unusable.</p>
+    <div id="aboutTikTokBanTimer" class="content">
+        <p>The timer represents the original January 19, 2025, midnight deadline for ByteDance to sell TikTok. Despite this deadline, TikTok chose to shut down its services in the U.S. on January 18, 2025, preemptively, to avoid any legal enforcement issues. This created confusion since the timer is still counting down.</p>
 
-    <p>But here’s the twist—just two days before the deadline, Biden announced he wouldn’t enforce the ban and decided to pass the responsibility to Trump instead. Why? Well, some say it’s because Biden didn’t want to take the blame for the fallout. Others think it’s just politics as usual. Either way, Biden’s administration left it up to Trump.</p>
+        <p>President-elect Trump’s announcement of a 90-day extension gives ByteDance until April 19, 2025, to find a buyer. While the current timer reflects the original deadline, future updates will include the new deadline if the executive order is finalized.</p>
 
-    <p>On January 18, 2025, TikTok proactively shut down its services in the U.S. ahead of the deadline. However, President-elect Donald Trump announced plans to issue an executive order on his inauguration day to extend the deadline by 90 days, giving ByteDance more time to find a U.S.-based buyer. Following this announcement, TikTok began restoring its services to U.S. users.</p>
-
-    <p>Meanwhile, content creators are scrambling to switch to platforms like Instagram and YouTube. The clock is ticking—literally.</p>
-</div>
-
-
-
-    <div id="embedCode" class="content">
-        <button class="copy-button" onclick="copyToClipboard()">Copy</button>
-        <pre><code id="embedCodeContent">&lt;!-- TikTok Ban Countdown Embed Code --&gt;
-&lt;div id="countdown-box"&gt;
-  &lt;div class="timer-row"&gt;
-    &lt;div class="countdown-label"&gt;In:&lt;/div&gt;
-    &lt;div class="countdown" id="countdown-embed"&gt;00d 00h 00m 00s&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"&gt;&lt;/script&gt;
-&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"&gt;&lt;/script&gt;
-&lt;script&gt;
-  var endDateEmbed = moment.tz("2025-01-19 23:59:59", "America/New_York").valueOf();
-  
-  function updateCountdownEmbed() {
-    var now = moment().tz("America/New_York").valueOf();
-    var distance = endDateEmbed - now;
-    if (distance < 0) {
-      document.getElementById("countdown-box").innerHTML = "• The countdown has ended — the deadline has passed •";
-    } else {
-      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      document.getElementById("countdown-embed").innerHTML = (days < 10 ? "0" : "") + days + "d " + (hours < 10 ? "0" : "") + hours + "h " + (minutes < 10 ? "0" : "") + minutes + "m " + (seconds < 10 ? "0" : "") + seconds + "s ";
-    }
-  }
-  
-  setInterval(updateCountdownEmbed, 1000);
-&lt;/script&gt;
-</code></pre>
+        <p>In the meantime, TikTok has begun restoring services for U.S. users, but its long-term future remains uncertain as the countdown continues toward its new deadline.</p>
     </div>
 
 </body>
