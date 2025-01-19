@@ -40,3 +40,29 @@ function initializeCountdowns() {
 }
 
 initializeCountdowns();
+
+function toggleContent(contentId, button) {
+    const contentElements = document.querySelectorAll(".content");
+    const buttons = document.querySelectorAll(".learn-more-button");
+
+    contentElements.forEach((content) => {
+        if (content.id !== contentId) {
+            content.style.display = "none";
+        }
+    });
+
+    buttons.forEach((btn) => {
+        if (btn !== button) {
+            btn.classList.remove("active");
+        }
+    });
+
+    const content = document.getElementById(contentId);
+    if (content.style.display === "block") {
+        content.style.display = "none";
+        button.classList.remove("active");
+    } else {
+        content.style.display = "block";
+        button.classList.add("active");
+    }
+}
