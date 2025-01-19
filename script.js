@@ -41,6 +41,7 @@ function initializeCountdowns() {
 
 initializeCountdowns();
 
+// Toggle content visibility for "Learn More" buttons
 function toggleContent(contentId, button) {
     const contentElements = document.querySelectorAll(".content");
     const buttons = document.querySelectorAll(".learn-more-button");
@@ -66,3 +67,15 @@ function toggleContent(contentId, button) {
         button.classList.add("active");
     }
 }
+
+// Dark mode toggle functionality
+const darkModeToggle = document.getElementById("nightModeToggle");
+darkModeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+});
+
+// Share buttons (optional customization for dynamic links)
+const shareButtons = document.querySelectorAll(".share-buttons a");
+shareButtons.forEach((button) => {
+    button.href = button.href.replace("YOUR_PAGE_URL", window.location.href);
+});
